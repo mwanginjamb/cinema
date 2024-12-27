@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\ContentNegotiator;
 use yii\httpclient\Client;
 use yii\httpclient\CurlTransport;
 use yii\web\Controller;
@@ -36,6 +37,14 @@ class SiteController extends Controller
                 'actions' => [
                     'logout' => ['post'],
                 ],
+            ],
+            'contentNegotiator' => [
+                'class' => ContentNegotiator::class,
+                'only' => [''],
+                'formatParam' => '_format',
+                'formats' => [
+                    'application/json' => Response::FORMAT_JSON,
+                ]
             ],
         ];
     }
@@ -130,7 +139,17 @@ class SiteController extends Controller
 
     public function actionDetails($id, $type)
     {
-        //`${config.baseUrl}/${this.mediaType}/${this.id}?api_key=${config.apiKey}&append_to_response=credits,videos,similar`
+        $this->layout = 'details';
+        // load cinema/ picture details
+        $details = $this->getPictureDetails($id, $type);
+
+        return $this->render('details', [
+            'details' => $details
+        ]);
+    }
+
+    public function getPictureDetails($id, $type)
+    {
         $url = env('BASE_URL') . '/' . $type . '/' . $id . '?api_key=' . env('API_KEY') . '&append_to_response=credits,videos,similar';
 
         try {

@@ -198,7 +198,7 @@ class MovieApp {
 
             // Make poster clickable
             const posterLink = document.createElement('a');
-            posterLink.href = `./details?id=${movie.id}&type=${movie?.type || this.filters.mediaType}`;
+            posterLink.href = `./site/details?id=${movie.id}&type=${movie?.type || this.filters.mediaType}`;
             poster.src = movie.poster_path
                 ? `${config.imageBaseUrl}${movie.poster_path}`
                 : 'placeholder-image.jpeg';

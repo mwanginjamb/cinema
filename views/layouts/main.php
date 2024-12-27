@@ -34,7 +34,8 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
     <link rel="canonical" href="https://boxoffice.gumzosystems.com/" />
     <title>Movie Explorer</title>
     <?php $this->head() ?>
-    <script defer src="https://analytics.gumzosystems.com/custom" data-website-id=""></script>
+    <script defer src="https://analytics.gumzosystems.com/custom"
+        data-website-id="<?= env('ANALYTICS_CODE') ?>"></script>
     <!-- <script defer src="script.js"></script> -->
     <script type="application/ld+json">
     {
