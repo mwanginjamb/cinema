@@ -1,6 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
+use yii\helpers\Url;
 
 $this->title = 'Welcome to Gumzo BoxOffice Explorer';
 ?>
@@ -14,3 +15,12 @@ $this->title = 'Welcome to Gumzo BoxOffice Explorer';
         <!-- Movies will be populated here -->
     </div>
 </div>
+
+<?php
+
+
+
+/** @var yii\web\View $this */
+
+
+$this->registerJsFile(Url::to('@web/js/app.js'));

@@ -773,9 +773,14 @@ select[multiple]::after {
     margin-bottom: 20px;
 }
 
-.biography {
+section.biography {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
     margin-bottom: 40px;
 }
+
 
 .biography-text {
     line-height: 1.6;

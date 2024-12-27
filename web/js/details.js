@@ -99,7 +99,7 @@ class MovieDetails {
             .slice(0, 12)
             .map(person => `
                 <div class="cast-member">
-                    <a href="person.html?id=${person.id}" class="cast-link" title="View ${person.name}'s profile">
+                    <a href="./person?id=${person.id}" class="cast-link" title="View ${person.name}'s profile">
                         <img src="${person.profile_path
                     ? config.imageBaseUrl + person.profile_path
                     : 'placeholder-image.jpeg'}" 
@@ -166,7 +166,7 @@ class MovieDetails {
             .slice(0, 18)
             .map(item => `
                 <div class="movie-card">
-                    <a href="details.html?id=${item.id}&type=${this.mediaType}">
+                    <a href="./details?id=${item.id}&type=${this.mediaType}">
                         <img src="${item.poster_path
                     ? config.imageBaseUrl + item.poster_path
                     : 'placeholder-image.jpeg'}" 

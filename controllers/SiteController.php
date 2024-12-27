@@ -3,15 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\filters\ContentNegotiator;
-use yii\httpclient\Client;
-use yii\httpclient\CurlTransport;
-use yii\web\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
+use yii\web\Controller;
 use app\models\LoginForm;
+use yii\helpers\VarDumper;
+use yii\httpclient\Client;
 use app\models\ContactForm;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\httpclient\CurlTransport;
+use yii\filters\ContentNegotiator;
 
 class SiteController extends Controller
 {
@@ -148,9 +149,53 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionPerson($id)
+    {
+        $this->layout = 'details';
+        // load cinema/ picture details
+        $person = $this->actionPersonDetails($id);
+        return $this->render('person', [
+            'person' => $person
+        ]);
+    }
+
     public function getPictureDetails($id, $type)
     {
         $url = env('BASE_URL') . '/' . $type . '/' . $id . '?api_key=' . env('API_KEY') . '&append_to_response=credits,videos,similar';
+
+        try {
+
+            $client = new Client([
+                'transport' => CurlTransport::class,
+            ]);
+
+            $request = $client->createRequest()
+                ->setMethod('GET')
+                ->setUrl($url)
+                ->setFormat(Client::FORMAT_JSON)
+                ->setOptions([
+                    CURLOPT_SSL_VERIFYPEER => false,
+                    CURLOPT_SSL_VERIFYHOST => false
+                ]);
+
+            $response = $request->send();
+            if ($response->isOk) { // Check if the response status is 200-299
+                return $response->data; // Return the relevant response data
+            } else {
+                // Log error details if needed and return a clear message
+                return [
+                    'status' => $response->statusCode,
+                    'error' => $response->data ?? 'Unexpected error occurred'
+                ];
+            }
+        } catch (\Exception $e) {
+            return "HTTP request failed with error: " . $e->getMessage();
+        }
+    }
+    public function actionPersonDetails($id)
+    {
+        // `${config.baseUrl}/person/${this.id}?api_key=${config.apiKey}&append_to_response=combined_credits`
+        $url = env('BASE_URL') . '/person/' . $id . '/?api_key=' . env('API_KEY') . '&append_to_response=combined_credits';
 
         try {
 

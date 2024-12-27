@@ -3,21 +3,21 @@
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 /** @var yii\web\View $this */
-$this->title = $details['title'];
+$this->title = $details['title'] ?? 'Box Office Explorer';
 $this->registerMetaTag(['name' => 'description', 'content' => $details['overview']]);
 $this->registerMetaTag(['name' => 'keywords', 'content' => implode(', ', ArrayHelper::getColumn($details['genres'], 'name'))]);
 
 // Open Graph Tags
-$this->registerMetaTag(['property' => 'og-title', 'content' => $details['title']]);
-$this->registerMetaTag(['property' => 'og-description', 'content' => $details['overview']]);
+$this->registerMetaTag(['property' => 'og-title', 'content' => $details['title'] ?? '']);
+$this->registerMetaTag(['property' => 'og-description', 'content' => $details['overview'] ?? '']);
 $this->registerMetaTag(['property' => 'og-image', 'content' => env('IMG_BASE_URL') . $details['backdrop_path']]);
 $this->registerMetaTag(['property' => 'og-url', 'content' => Url::canonical()]);
 $this->registerMetaTag(['property' => 'og:image:alt', 'content' => 'BoxOffice - Cinema Explorer']);
 $this->registerMetaTag(['property' => 'og:type', 'content' => 'website']);
 
 // x Tags
-$this->registerMetaTag(['name' => 'twitter-title', 'content' => $details['title']]);
-$this->registerMetaTag(['name' => 'twitter-description', 'content' => $details['overview']]);
+$this->registerMetaTag(['name' => 'twitter-title', 'content' => $details['title'] ?? '']);
+$this->registerMetaTag(['name' => 'twitter-description', 'content' => $details['overview'] ?? '']);
 $this->registerMetaTag(['name' => 'twitter-image', 'content' => env('IMG_BASE_URL') . $details['poster_path']]);
 $this->registerMetaTag(['name' => 'twitter:site', 'content' => '@boxoffice']);
 
@@ -160,6 +160,5 @@ $this->registerMetaTag(['property' => 'og:image:secure_url', 'content' => env('I
 $this->registerCssFile(Url::to('@web/css/style.css'), [
     'depends' => [\yii\web\YiiAsset::class],
 ]);
-$this->registerJsFile(Url::to('@web/js/config.js'));
 $this->registerJsFile(Url::to('@web/js/config.js'));
 $this->registerJsFile(Url::to('@web/js/details.js'));
