@@ -22,7 +22,6 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
     <link rel="stylesheet" href="styles.css">
     <script defer src="https://analytics.gumzosystems.com/custom"
         data-website-id="<?= env('ANALYTICS_CODE') ?>"></script>
-    <script defer src="script.js"></script>
     <title><?= Html::encode($this->title) ?></title>
 
 </head>
